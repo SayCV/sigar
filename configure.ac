@@ -62,7 +62,7 @@ case $host_os in
      SRC_OS="linux"
      AC_DEFINE(SIGAR_TEST_OS_LINUX, [1], [for the tests])
      ;;
-     CYGWIN*|*_NT-*)
+     *CYGWIN*)
      SRC_OS="linux"
      AC_DEFINE(SIGAR_TEST_OS_LINUX, [1], [for the tests])
      ;;
