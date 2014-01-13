@@ -106,7 +106,7 @@ SIGAR_DECLARE(int) sigar_close(sigar_t *sigar)
     return sigar_os_close(sigar);
 }
 
-#ifndef __linux__ /* linux has a special case */
+#if !defined(__linux__) && !defined(__cygwin__) /* linux has a special case */
 SIGAR_DECLARE(sigar_pid_t) sigar_pid_get(sigar_t *sigar)
 {
     if (!sigar->pid) {
@@ -810,7 +810,7 @@ sigar_net_connection_list_destroy(sigar_t *sigar,
     return SIGAR_OK;
 }
 
-#if !defined(__linux__)
+#if !defined(__linux__) && !defined(__cygwin__)
 /* 
  * implement sigar_net_connection_list_get using sigar_net_connection_walk
  * linux has its own list_get impl.
@@ -1547,7 +1547,7 @@ static void hwaddr_arp_lookup(sigar_net_interface_config_t *ifconfig, int sock)
 
 #endif
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__cygwin__)
 
 #include <net/if_arp.h>
 
@@ -1674,7 +1674,7 @@ int sigar_net_interface_config_get(sigar_t *sigar, const char *name,
     
     if (!ioctl(sock, SIOCGIFFLAGS, &ifr)) {
         sigar_uint64_t flags = ifr.ifr_flags;
-#ifdef __linux__
+#if defined(__linux__) || defined(__cygwin__)
 # ifndef IFF_DYNAMIC
 #  define IFF_DYNAMIC 0x8000 /* not in 2.2 kernel */
 # endif /* IFF_DYNAMIC */
@@ -1815,7 +1815,7 @@ static int sigar_netif_configured(sigar_t *sigar, char *name)
 }
 #endif
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__cygwin__)
 static SIGAR_INLINE int has_interface(sigar_net_interface_list_t *iflist,
                                       char *name)
 {
@@ -1951,7 +1951,7 @@ int sigar_net_interface_list_get(sigar_t *sigar,
             sigar_strdup(ifr->ifr_name);
     }
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__cygwin__)
     proc_net_interface_list_get(sigar, iflist);
 #endif
 
@@ -2044,7 +2044,7 @@ struct hostent *sigar_gethostbyname(const char *name,
 {
     struct hostent *hp = NULL;
  
-#if defined(__linux__)
+#if defined(__linux__) || defined(__cygwin__)
     gethostbyname_r(name, &data->hs,
                     data->buffer, sizeof(data->buffer),
                     &hp, &data->error);
@@ -2071,8 +2071,8 @@ static struct hostent *sigar_gethostbyaddr(const char *addr,
                                            sigar_hostent_t *data)
 {
     struct hostent *hp = NULL;
-
-#if defined(__linux__)
+    
+#if defined(__linux__) || defined(__cygwin__)
     gethostbyaddr_r(addr, len, type,
                     &data->hs,
                     data->buffer, sizeof(data->buffer),
