@@ -62,7 +62,7 @@ case $host_os in
      SRC_OS="linux"
      AC_DEFINE(SIGAR_TEST_OS_LINUX, [1], [for the tests])
      ;;
-     *CYGWIN*)
+     *cygwin*)
      SRC_OS="linux"
      AC_DEFINE(SIGAR_TEST_OS_LINUX, [1], [for the tests])
      ;;
@@ -82,7 +82,7 @@ if test $ac_cv_header_libproc_h = yes; then
         AC_DEFINE(DARWIN_HAS_LIBPROC_H, [1], [sigar named them DARWIN_HAS_... instead of HAVE_])
 fi
 
-INCLUDES="-I\$(top_srcdir)/include -I\$(top_srcdir)/src/os/$SRC_OS $SIGAR_INCLUDES"
+INCLUDES="-I\$(top_srcdir)/include -I\$(top_srcdir)/src/os/$SRC_OS -I\$(top_srcdir)/src/os/$SRC_OS/cygwin-include $SIGAR_INCLUDES"
 
 AC_SUBST(SRC_OS)
 AC_SUBST(INCLUDES)
