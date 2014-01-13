@@ -176,9 +176,11 @@
   </target>
 
   <target name="sigar.rc" if="win32">
-    <exec executable="rc" dir="${build}/src">
-      <arg value="/r"/>
+    <exec executable="windres" dir="${build}/src">
+      <arg value="-i"/>
       <arg value="sigar.rc"/>
+      <arg value="-o"/>
+      <arg value="sigar.res"/>
     </exec>
   </target>
 
