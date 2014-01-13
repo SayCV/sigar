@@ -66,6 +66,7 @@ case $host_os in
      SRC_OS="linux"
      AC_DEFINE(SIGAR_TEST_OS_LINUX, [1], [for the tests])
      AC_DEFINE(__cygwin__, [1], [for the cygwin])
+     SIGAR_LIBS="-ltirpc"
      ;;
      *solaris*)
      AC_DEFINE(SOLARIS,[],[running on Solaris])

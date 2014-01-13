@@ -23,6 +23,9 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/time.h>
+#if defined(__cygwin__)
+#include <netdb.h>
+#endif
 #endif
 #if defined(__OpenBSD__) || defined(__FreeBSD__)
 #include <netinet/in.h>
@@ -1678,6 +1681,14 @@ int sigar_net_interface_config_get(sigar_t *sigar, const char *name,
 # ifndef IFF_DYNAMIC
 #  define IFF_DYNAMIC 0x8000 /* not in 2.2 kernel */
 # endif /* IFF_DYNAMIC */
+
+# ifndef IFF_SLAVE
+#  define IFF_SLAVE 0x800
+# endif
+# ifndef IFF_MASTER
+#  define IFF_MASTER 0x400
+# endif
+
         int is_mcast = flags & IFF_MULTICAST;
         int is_slave = flags & IFF_SLAVE;
         int is_master = flags & IFF_MASTER;
@@ -2044,7 +2055,7 @@ struct hostent *sigar_gethostbyname(const char *name,
 {
     struct hostent *hp = NULL;
  
-#if defined(__linux__) || defined(__cygwin__)
+#if defined(__linux__) /*|| defined(__cygwin__)*/
     gethostbyname_r(name, &data->hs,
                     data->buffer, sizeof(data->buffer),
                     &hp, &data->error);
@@ -2072,7 +2083,7 @@ static struct hostent *sigar_gethostbyaddr(const char *addr,
 {
     struct hostent *hp = NULL;
     
-#if defined(__linux__) || defined(__cygwin__)
+#if defined(__linux__)/*|| defined(__cygwin__)*/
     gethostbyaddr_r(addr, len, type,
                     &data->hs,
                     data->buffer, sizeof(data->buffer),

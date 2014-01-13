@@ -748,7 +748,7 @@ int sigar_cpu_mhz_from_model(char *model)
 #if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__sun) || defined(DARWIN)
 #include <arpa/inet.h>
 #endif
-#if defined(__sun) || defined(SIGAR_HPUX)
+#if defined(__sun) || defined(SIGAR_HPUX)|| defined(__cygwin__)
 #include <rpc/clnt_soc.h>
 #endif
 #if defined(_AIX) || defined(SIGAR_HPUX) || defined(__OpenBSD__) || defined(__NetBSD__)
