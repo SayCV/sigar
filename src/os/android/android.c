@@ -106,3 +106,24 @@ int setpwent() { return 0; }
 void setgrent() {}
 void endgrent() {}
 #endif
+
+// copy from
+// https://www-asim.lip6.fr/trac/netbsdtsar/browser/vendor/netbsd/5-20091104/src/lib/libc/gen/getdomainname.c?rev=2
+
+#include <sys/param.h>
+#include <linux/sysctl.h>
+#include <unistd.h>
+
+int
+getdomainname(char *name, size_t namelen)
+{
+	int mib[2];
+	size_t size;
+
+	mib[0] = CTL_KERN;
+	mib[1] = KERN_DOMAINNAME;
+	size = namelen;
+	if (sysctl(mib, 2, name, &size, NULL, 0) == -1)
+		return (-1);
+	return (0);
+}
