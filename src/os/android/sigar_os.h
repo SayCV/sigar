@@ -79,4 +79,9 @@ struct sigar_t {
 #define HAVE_GETPWUID_R
 #define HAVE_GETGRGID_R
 
+// copy from
+// https://github.com/CyanogenMod/android_external_busybox/blob/3f2a90a33ce303046fce820f3934aefe23abb065/include/android.h
+#define setmntent fopen
+#define endmntent fclose
+
 #endif /* SIGAR_OS_H */
