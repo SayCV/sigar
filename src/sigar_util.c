@@ -789,7 +789,7 @@ int sigar_cpu_mhz_from_model(char *model)
     return mhz;
 }
 
-#if !defined(WIN32) && !defined(NETWARE)
+#if !defined(WIN32) && !defined(NETWARE) && !defined(__android__)
 #include <netdb.h>
 #include <rpc/rpc.h>
 #include <rpc/pmap_prot.h>
@@ -906,7 +906,7 @@ int sigar_file2str(const char *fname, char *buffer, int buflen)
 #define vsnprintf _vsnprintf
 #endif
 
-#ifdef WIN32
+#if defined(WIN32) || defined(__android__)
 #   define rindex strrchr
 #endif
 

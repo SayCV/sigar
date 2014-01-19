@@ -75,9 +75,9 @@ struct sigar_t {
 #define HAVE_STRERROR_R_GLIBC
 #endif
 #define HAVE_READDIR_R
-#define HAVE_GETPWNAM_R
-#define HAVE_GETPWUID_R
-#define HAVE_GETGRGID_R
+//#define HAVE_GETPWNAM_R
+//#define HAVE_GETPWUID_R
+//#define HAVE_GETGRGID_R
 
 // copy from
 // https://github.com/CyanogenMod/android_external_busybox/blob/3f2a90a33ce303046fce820f3934aefe23abb065/include/android.h

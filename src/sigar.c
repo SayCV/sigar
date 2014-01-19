@@ -626,7 +626,7 @@ sigar_file_system_ping(sigar_t *sigar,
                        sigar_file_system_t *fs)
 {
     int status = SIGAR_OK;
-#ifndef WIN32
+#if !defined(WIN32) && !defined(__android__)
     char *ptr;
 
     if ((fs->type == SIGAR_FSTYPE_NETWORK) &&
@@ -2083,7 +2083,7 @@ static struct hostent *sigar_gethostbyaddr(const char *addr,
 {
     struct hostent *hp = NULL;
     
-#if defined(__linux__)/*|| defined(__cygwin__)*/
+#if defined(__linux__) && !defined(__android__)
     gethostbyaddr_r(addr, len, type,
                     &data->hs,
                     data->buffer, sizeof(data->buffer),
@@ -2375,13 +2375,13 @@ SIGAR_DECLARE(char *) sigar_password_get(const char *prompt)
 
 /* from apr_getpass.c */
 
-#if defined(SIGAR_HPUX)
+#if defined(SIGAR_HPUX) || defined(__android__)
 #   define getpass termios_getpass
 #elif defined(SIGAR_SOLARIS)
 #   define getpass getpassphrase
 #endif
 
-#ifdef SIGAR_HPUX
+#if defined(SIGAR_HPUX) || defined(__android__)
 static char *termios_getpass(const char *prompt)
 {
     struct termios attr;
