@@ -82,7 +82,7 @@
 #include "sigar.h"
 
 #ifndef WIN32
-#if defined(__FreeBSD__) || defined(__OpenBSD__)
+#if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__android__)
 # include <sys/param.h>
 # include <sys/mount.h>
 #else
