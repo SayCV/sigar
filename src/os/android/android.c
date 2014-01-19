@@ -19,12 +19,16 @@
 #include <sys/times.h>
 #include <sys/utsname.h>
 
+#include <mntent.h>
+
 /* declared in stdlib.h */
+/*
 int clearenv()
 {
         environ = NULL;
         return 0;
 }
+*/
 
 /* bionic/stubs.c:ttyname not implemented anyway */
 int ttyname_r(int fd, char *name, size_t namesize)
