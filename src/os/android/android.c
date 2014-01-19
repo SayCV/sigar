@@ -127,7 +127,7 @@ getdomainname(char *name, size_t namelen)
 	if (sysctl(mib, 2, name, &size, NULL, 0) == -1)
 		return (-1);
 */
-	if( name != null )
+	if( name != NULL )
 		memcpy(name, "HackingDomainName", namelen);
 	return (0);
 }
