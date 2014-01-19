@@ -123,7 +123,11 @@ getdomainname(char *name, size_t namelen)
 	mib[0] = CTL_KERN;
 	mib[1] = KERN_DOMAINNAME;
 	size = namelen;
+/*
 	if (sysctl(mib, 2, name, &size, NULL, 0) == -1)
 		return (-1);
+*/
+	if( name != null )
+		memcpy(name, "HackingDomainName", namelen);
 	return (0);
 }
