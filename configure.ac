@@ -58,15 +58,15 @@ case $host_os in
      AC_DEFINE(SIGAR_TEST_OS_HPUX, [1], [for the tests])
      SIGAR_LIBS="-lnm -lnsl"
      ;;
+     *android*)
+     SRC_OS="android"
+     AC_DEFINE(SIGAR_TEST_OS_ANDROID, [1], [for the tests])
+     AC_DEFINE(__android__, [1], [for the android])
+     SIGAR_LIBS="-ltirpc"
+     ;;
      *linux*)
      SRC_OS="linux"
      AC_DEFINE(SIGAR_TEST_OS_LINUX, [1], [for the tests])
-     ;;
-     *cygwin*)
-     SRC_OS="linux"
-     AC_DEFINE(SIGAR_TEST_OS_LINUX, [1], [for the tests])
-     AC_DEFINE(__cygwin__, [1], [for the cygwin])
-     SIGAR_LIBS="-ltirpc"
      ;;
      *solaris*)
      AC_DEFINE(SOLARIS,[],[running on Solaris])
@@ -92,6 +92,7 @@ AC_SUBST(SIGAR_LIBS)
 
 AM_CONDITIONAL(OS_WIN32, test x$SRC_OS = xwin32)
 AM_CONDITIONAL(OS_MACOSX, test x$SRC_OS = xdarwin)
+AM_CONDITIONAL(OS_ANDROID, test x$SRC_OS = xandroid)
 AM_CONDITIONAL(OS_LINUX, test x$SRC_OS = xlinux)
 AM_CONDITIONAL(OS_HPUX, test x$SRC_OS = xhpux)
 AM_CONDITIONAL(OS_AIX, test x$SRC_OS = xaix)
@@ -153,6 +154,7 @@ src/os/aix/Makefile
 src/os/darwin/Makefile
 src/os/freebsd/Makefile
 src/os/hpux/Makefile
+src/os/android/Makefile
 src/os/linux/Makefile
 src/os/solaris/Makefile
 src/os/win32/Makefile

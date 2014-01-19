@@ -8,7 +8,8 @@ libsigar_la_LDFLAGS = $(SIGAR_LIBS)
 
 libsigar_la_LIBADD = $(top_builddir)/src/os/@SRC_OS@/libsigar_os.la
 
-libsigar_la_CFLAGS = -I$(top_srcdir)/include -I/usr/include/tirpc -Icygwin-include
+#  -I/usr/include/tirpc -Icygwin-include
+libsigar_la_CFLAGS = -I$(top_srcdir)/include
 
 libsigar_la_SOURCES = \
 	sigar.c \

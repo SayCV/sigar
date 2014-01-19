@@ -3,6 +3,7 @@ SUBDIRS = \
 	darwin \
 	freebsd \
 	hpux \
+	android \
 	linux \
 	solaris \
 	win32 
