@@ -7,7 +7,7 @@ cpuinfo_LDADD =
 sigar_ps_LDADD =
 
 if OS_ANDROID
-extra_OS_ANDROID_LIBS = $(top_builddir)/src/os/android/libsigar_os.la
+extra_OS_ANDROID_LIBS = -lc $(top_builddir)/src/os/android/libsigar_os.la
 noinst_PROGRAMS += android_ndk_link_hacking
 cpuinfo_LDADD += $(extra_OS_ANDROID_LIBS)
 sigar_ps_LDADD += $(extra_OS_ANDROID_LIBS)

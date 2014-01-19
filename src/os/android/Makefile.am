@@ -1,6 +1,6 @@
 INCLUDES = @INCLUDES@
 
-SIGAR_OS_SRCS = linux_sigar.c
+SIGAR_OS_SRCS = linux_sigar.c android.c
 
 SIGAR_OS_HDRS = sigar_os.h
 
