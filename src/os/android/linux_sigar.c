@@ -30,6 +30,7 @@
 #include "sigar_util.h"
 #include "sigar_os.h"
 
+
 #define pageshift(x) ((x) << sigar->pagesize)
 
 #define PROC_MEMINFO PROC_FS_ROOT "meminfo"
@@ -1087,6 +1088,38 @@ int sigar_thread_cpu_get(sigar_t *sigar,
 
 #include <mntent.h>
 
+#if defined(__android__)
+
+#include <paths.h>
+#include <sys/types.h> /* for some applications: major()... */
+
+// copy from 
+// https://android.googlesource.com/platform/
+// prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.7-4.6/+/android-cts-4.1_r2/
+// sysroot/usr/include/mntent.h
+
+/* File listing canonical interesting mount points.  */
+#define MNTTAB          _PATH_MNTTAB    /* Deprecated alias.  */
+
+/* File listing currently active mount points.  */
+#define MOUNTED         _PATH_MOUNTED   /* Deprecated alias.  */
+
+
+/* General filesystem types.  */
+#define MNTTYPE_IGNORE  "ignore"        /* Ignore this entry.  */
+#define MNTTYPE_NFS     "nfs"           /* Network file system.  */
+#define MNTTYPE_SWAP    "swap"          /* Swap device.  */
+
+
+/* Generic mount options.  */
+#define MNTOPT_DEFAULTS "defaults"      /* Use all default options.  */
+#define MNTOPT_RO       "ro"            /* Read only.  */
+#define MNTOPT_RW       "rw"            /* Read/write.  */
+#define MNTOPT_SUID     "suid"          /* Set uid allowed.  */
+#define MNTOPT_NOSUID   "nosuid"        /* No set uid allowed.  */
+#define MNTOPT_NOAUTO   "noauto"        /* Do not auto mount.  */
+
+#endif
 int sigar_os_fs_type_get(sigar_file_system_t *fsp)
 {
     char *type = fsp->sys_type_name;
