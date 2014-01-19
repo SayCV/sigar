@@ -31,6 +31,58 @@
 #include <dirent.h>
 #include <sys/stat.h>
 
+#if defined(__android__)
+#include <sys/cdefs.h>
+#include <sys/types.h>
+# define __u_char_defined
+# define __daddr_t_defined
+
+/* deprecated */
+#ifndef quad_t
+typedef	__int64_t	quad_t;
+#endif
+#ifndef u_quad_t
+typedef	__uint64_t	u_quad_t;
+#endif
+#ifndef qaddr_t
+typedef	quad_t *	qaddr_t;
+#endif
+
+#ifdef __GNUC__
+
+/* GCC can always grok prototypes.  For C++ programs we add throw()
+   to help it optimize the function calls.  But this works only with
+   gcc 2.8.x and egcs.  For gcc 3.2 and up we even mark C functions
+   as non-throwing using a function attribute since programs can use
+   the -fexceptions options for C code as well.  */
+# if !defined __cplusplus && __GNUC_PREREQ__ (3, 3)
+#  define __THROW __attribute__ ((__nothrow__))
+#  define __NTH(fct) __attribute__ ((__nothrow__)) fct
+# else
+#  if defined __cplusplus && __GNUC_PREREQ__ (2,8)
+#   define __THROW throw ()
+#   define __NTH(fct) fct throw ()
+#  else
+#   define __THROW
+#   define __NTH(fct) fct
+#  endif
+# endif
+
+#else /* Not GCC.  */
+
+# define __inline  /* No inline functions.  */
+
+# define __THROW
+# define __NTH(fct) fct
+
+# define __const const
+# define __signed signed
+# define __volatile volatile
+
+#endif /* GCC.  */
+
+#endif
+
 SIGAR_INLINE char *sigar_uitoa(char *buf, unsigned int n, int *len)
 {
     char *start = buf + UITOA_BUFFER_SIZE - 1;
