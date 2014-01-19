@@ -1091,7 +1091,6 @@ int sigar_thread_cpu_get(sigar_t *sigar,
 #if defined(__android__)
 
 #include <paths.h>
-#include <sys/types.h> /* for some applications: major()... */
 
 // copy from 
 // https://android.googlesource.com/platform/
@@ -1207,8 +1206,27 @@ int sigar_file_system_list_get(sigar_t *sigar,
     return SIGAR_OK;
 }
 
+#if defined(__android__)
+
+#include <sys/types.h> /* for some applications: major()... */
+
+//
+static __inline__ int ST_MAJOR(struct stat sb)
+{
+  return (sb.st_rdev >> 8) & 0xfff;
+}
+
+static __inline__ int ST_MINOR(struct stat sb)
+{
+  return (sb.st_rdev & 0xff) | ((sb.st_rdev >> 12) & 0xfff00);
+}
+//
+#else
+
 #define ST_MAJOR(sb) major((sb).st_rdev)
 #define ST_MINOR(sb) minor((sb).st_rdev)
+
+#endif
 
 static int get_iostat_sys(sigar_t *sigar,
                           const char *dirname,

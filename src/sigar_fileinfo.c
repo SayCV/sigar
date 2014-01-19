@@ -85,6 +85,7 @@
 #if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__android__)
 # include <sys/param.h>
 # include <sys/mount.h>
+# include <sys/statfs.h>
 #else
 # include <sys/statvfs.h>
 # define HAVE_STATVFS

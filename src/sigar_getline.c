@@ -367,6 +367,16 @@ static void     search_forw(int s);     /* look forw for current string */
 static struct sgttyb   new_tty, old_tty;
 static struct tchars   tch;
 static struct ltchars  ltch;
+
+#if defined(__android__)
+#include <termios.h>
+/*struct winsize {
+ unsigned short ws_row;
+ unsigned short ws_col;
+ unsigned short ws_xpixel;
+ unsigned short ws_ypixel;
+};*/
+#endif
 #else
 #ifdef SIGTSTP          /* need POSIX interface to handle SUSP */
 #include <termios.h>
@@ -421,7 +431,9 @@ gl_char_init()                  /* turn off input echo */
     gl_dsuspc = ltch.t_dsuspc;
     ioctl(0, TIOCGETP, &old_tty);
     new_tty = old_tty;
+#if !defined(__android__)
     new_tty.sg_flags |= RAW;
+#endif
     new_tty.sg_flags &= ~ECHO;
     ioctl(0, TIOCSETP, &new_tty);
 #else
