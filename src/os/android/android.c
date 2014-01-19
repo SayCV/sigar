@@ -112,7 +112,7 @@ void endgrent() {}
 
 #include <sys/param.h>
 #include <linux/sysctl.h>
-#include <unistd.h>
+//#include <unistd.h>
 
 int
 getdomainname(char *name, size_t namelen)
