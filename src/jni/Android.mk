@@ -35,4 +35,20 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/sigar
 LOCAL_STATIC_LIBRARIES := android_sigar_os
 include $(BUILD_SHARED_LIBRARY)
 
+include $(CLEAR_VARS)
+LOCAL_MODULE := cpuinfo
+LOCAL_SRC_FILES := ../../examples/cpuinfo.c
+LOCAL_CFLAGS := \
+	-D__android__=1 \
+	-I../include
+LOCAL_SHARED_LIBRARIES := sigar
+include $(BUILD_EXECUTABLE)
 
+include $(CLEAR_VARS)
+LOCAL_MODULE := sigar_ps
+LOCAL_SRC_FILES := ../../examples/sigar_ps.c
+LOCAL_CFLAGS := \
+	-D__android__=1 \
+	-I../include
+LOCAL_SHARED_LIBRARIES := sigar
+include $(BUILD_EXECUTABLE)
