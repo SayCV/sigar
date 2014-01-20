@@ -14,8 +14,8 @@
 #if (DEBUG_FLAG == 1)
 
 static unsigned int __sdebug_time = 0;
-#define  __debug_Msg_Size 1024
-static char __pdebug_Msg[__debug_Msg_Size];
+#define  __pdebug_Msg_Size 1024
+static char __pdebug_Msg[__pdebug_Msg_Size];
 //注意下面的__attribute__不是C标准。。。。
 static void __debug_info(const char *prefix,const char *fmt, ...) __attribute__((format (printf, 2, 3)));
 #define __NEXT_DBG_TIME() do{sdebug_time++;}while(0)
@@ -33,7 +33,7 @@ static void __debug_info(const char *prefix,const char *fmt, ...) __attribute__(
 
 #define __ASSERT_LOG(exp,fmt,...) __debug_info_LOG(exp,"ASSERT!",fmt,__VA_ARGS__)
 #define __ERROR_LOG(exp,fmt,...) __debug_info_LOG(exp,"ERROR!",fmt,__VA_ARGS__)
-define __BEFORE_LOG(N,fmt,...)  do {__debug_info_LOG((N) < __sdebug_time,"BEFORE!",fmt,__VA_ARGS__);__NEXT_DBG_TIME()}while(0) 
+#define __BEFORE_LOG(N,fmt,...)  do {__debug_info_LOG((N) < __sdebug_time,"BEFORE!",fmt,__VA_ARGS__);__NEXT_DBG_TIME()}while(0) 
 #define __AFTER_LOG(N,fmt,...) do {__debug_info_LOG((N) >= __sdebug_time,"AFTER!",fmt,__VA_ARGS__); __NEXT_DBG_TIME();}while(0) 
 static void __debug_info(const char *prefix,const char *fmt, ...) {
 	va_list params;	
