@@ -48,12 +48,10 @@
 #include "sigar_format.h"
 #include "sigar_tests.h"
 
-#if defined(__android__)
-// for native asset manager
-#include <sys/types.h>
-#include <android/asset_manager.h>
-#include <android/asset_manager_jni.h>
-#endif
+//#define UNDEBUG_FILE
+#include "trace.h"
+
+#define assert(exp) __ASSERT_EXIT(exp)
 
 TEST(test_sigar_cpu_get) {
 	sigar_cpu_t cpu;

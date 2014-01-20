@@ -18,7 +18,9 @@
 #define SIGAR_OS_H
 
 #include <assert.h>
-
+#if defined(__android__)
+#include <jni.h>
+#endif
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -29,6 +31,9 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
 
 typedef struct {
     sigar_pid_t pid;
