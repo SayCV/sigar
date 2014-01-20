@@ -71,7 +71,7 @@ TEST(test_sigar_cpu_get) {
 		switch (ret) {
 			/* track the expected error code */
 		default:
-			fprintf(stderr, "ret = %d (%s)\n", ret, sigar_strerror(t, ret));
+			LOGE("ret = %d (%s)\n", ret, sigar_strerror(t, ret));
 			assert(ret == SIGAR_OK); 
 			break;
 		}
@@ -89,7 +89,7 @@ TEST(test_sigar_cpu_list_get) {
 		switch (ret) {
 			/* track the expected error code */
 		default:
-			fprintf(stderr, "ret = %d (%s)\n", ret, sigar_strerror(t, ret));
+			LOGE("ret = %d (%s)\n", ret, sigar_strerror(t, ret));
 			assert(ret == SIGAR_OK); 
 			break;
 		}
