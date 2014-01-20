@@ -137,9 +137,9 @@ typedef gid_t sigar_gid_t;
 
 #include <android/log.h>
 
-#define LOGE(msg) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, msg)
-#define LOGI(msg) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, msg)
-#define LOGD(msg) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, msg)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 	
 #endif
 
