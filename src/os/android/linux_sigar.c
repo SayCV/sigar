@@ -30,6 +30,8 @@
 #include "sigar_util.h"
 #include "sigar_os.h"
 
+//#define UNDEBUG_FILE
+#include "trace.h"
 
 #define pageshift(x) ((x) << sigar->pagesize)
 
@@ -404,11 +406,11 @@ int sigar_swap_get(sigar_t *sigar, sigar_swap_t *swap)
 static void get_cpu_metrics(sigar_t *sigar, sigar_cpu_t *cpu, char *line)
 {
     char *ptr = sigar_skip_token(line); /* "cpu%d" */
-
-    cpu->user += SIGAR_TICK2MSEC(sigar_strtoull(ptr));
-    cpu->nice += SIGAR_TICK2MSEC(sigar_strtoull(ptr));
-    cpu->sys  += SIGAR_TICK2MSEC(sigar_strtoull(ptr));
-    cpu->idle += SIGAR_TICK2MSEC(sigar_strtoull(ptr));
+		__FUNC_LOGn();
+    cpu->user += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();
+    cpu->nice += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();
+    cpu->sys  += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();
+    cpu->idle += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();
     if (*ptr == ' ') {
         /* 2.6+ kernels only */
         cpu->wait += SIGAR_TICK2MSEC(sigar_strtoull(ptr));
@@ -428,14 +430,14 @@ int sigar_cpu_get(sigar_t *sigar, sigar_cpu_t *cpu)
 {
     char buffer[BUFSIZ];
     int status = sigar_file2str(PROC_STAT, buffer, sizeof(buffer));
-
+		__FUNC_LOGn();
     if (status != SIGAR_OK) {
         return status;
     }
-
+		__FUNC_LOGn();
     SIGAR_ZERO(cpu);
     get_cpu_metrics(sigar, cpu, buffer);
-
+		__FUNC_LOGn();
     return SIGAR_OK;
 }
 

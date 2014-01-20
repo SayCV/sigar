@@ -58,6 +58,7 @@ TEST(test_sigar_cpu_get) {
 	int ret;
 	__FUNC_LOGn();
 	if (SIGAR_OK == (ret = sigar_cpu_get(t, &cpu))) {
+		__FUNC_LOGn();
 		assert(IS_IMPL_U64(cpu.user));
 		assert(IS_IMPL_U64(cpu.sys));
 #if !(defined(SIGAR_TEST_OS_AIX))
