@@ -4,6 +4,11 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE    := sigar
+LOCAL_SRC_FILES := ../../src/libs/libsigar.so
+include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := cpuinfo
 LOCAL_SRC_FILES := ../cpuinfo.c
 LOCAL_CFLAGS := \
