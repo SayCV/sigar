@@ -45,6 +45,9 @@
 #include "sigar_format.h"
 #include "sigar_tests.h"
 
+//#define UNDEBUG_FILE
+#include "trace.h"
+
 TEST(test_sigar_net_connections_get) {
 	sigar_net_connection_list_t connlist;
 	size_t i;
@@ -75,7 +78,7 @@ TEST(test_sigar_net_connections_get) {
 			/* track the expected error code */
 			break;
 		default:
-			fprintf(stderr, "ret = %d (%s)\n", ret, sigar_strerror(t, ret));
+			LOGE("ret = %d (%s)\n", ret, sigar_strerror(t, ret));
 			assert(ret == SIGAR_OK); 
 			break;
 		}

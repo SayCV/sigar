@@ -45,6 +45,8 @@
 #include "sigar_format.h"
 #include "sigar_tests.h"
 
+//#define UNDEBUG_FILE
+#include "trace.h"
 
 TEST(test_sigar_mem_get) {
 	sigar_mem_t mem;
