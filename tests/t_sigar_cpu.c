@@ -51,12 +51,12 @@
 //#define UNDEBUG_FILE
 #include "trace.h"
 
-#define assert(exp) __ASSERT_EXIT(exp)
+#define assert(exp) __ASSERT(exp)
 
 TEST(test_sigar_cpu_get) {
 	sigar_cpu_t cpu;
 	int ret;
-
+	__FUNC_LOGn();
 	if (SIGAR_OK == (ret = sigar_cpu_get(t, &cpu))) {
 		assert(IS_IMPL_U64(cpu.user));
 		assert(IS_IMPL_U64(cpu.sys));
@@ -142,13 +142,15 @@ TEST(test_sigar_cpu_info_get) {
 int main() {
 	sigar_t *t;
 	int err = 0;
-	
+	__FUNC_LOGn();
 	assert(SIGAR_OK == sigar_open(&t));
-
+	__FUNC_LOGn();
 	test_sigar_cpu_get(t);
+	__FUNC_LOGn();
 	test_sigar_cpu_list_get(t);
+	__FUNC_LOGn();
 	test_sigar_cpu_info_get(t);
-
+	__FUNC_LOGn();
 	sigar_close(t);
 
 	return err ? -1 : 0;
