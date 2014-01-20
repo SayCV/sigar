@@ -35,6 +35,9 @@
 #endif
 
 #include <assert.h>
+#if defined(__android__)
+#include <jni.h>
+#endif
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -44,6 +47,13 @@
 #include "sigar_private.h"
 #include "sigar_format.h"
 #include "sigar_tests.h"
+
+#if defined(__android__)
+// for native asset manager
+#include <sys/types.h>
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
+#endif
 
 TEST(test_sigar_cpu_get) {
 	sigar_cpu_t cpu;

@@ -5,9 +5,10 @@ LOCAL_MODULE := android_sigar_os
 LOCAL_SRC_FILES := \
 	../os/android/android.c \
 	../os/android/linux_sigar.c
-LOCAL_CFLAGS := \
+LOCAL_CFLAGS := -Wall -g \
 	-D__android__=1 \
 	-I../include
+LOCAL_LDFLAGS := -Wl,-Map,android_sigar_os.map
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/android_sigar_os
 LOCAL_EXPORT_CFLAGS := \
 	-D__android__=1
@@ -26,10 +27,11 @@ LOCAL_SRC_FILES := \
 	../sigar_signal.c \
 	../sigar_util.c \
 	../sigar_version_autoconf.c
-LOCAL_CFLAGS := \
+LOCAL_CFLAGS := -Wall -g \
 	-D__android__=1 \
 	-I../include \
 	-Ios/android
+LOCAL_LDFLAGS := -Wl,-Map,sigar.map	
 LOCAL_LDLIBS    += -lc
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/sigar
 LOCAL_STATIC_LIBRARIES := android_sigar_os

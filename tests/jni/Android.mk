@@ -13,9 +13,12 @@ include $(PREBUILT_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 LOCAL_MODULE := sigar_cpu
 LOCAL_SRC_FILES := ../t_sigar_cpu.c
-LOCAL_CFLAGS := \
+LOCAL_CFLAGS := -Wall -g \
 	-D__android__=1 \
 	-I../include
+LOCAL_LDFLAGS := -Wl,-Map,sigar_cpu.map	
+# for logging
+LOCAL_LDLIBS    += -llog
 LOCAL_SHARED_LIBRARIES := sigar
 include $(BUILD_EXECUTABLE)
 
@@ -25,6 +28,8 @@ LOCAL_SRC_FILES := ../t_sigar_mem.c
 LOCAL_CFLAGS := \
 	-D__android__=1 \
 	-I../include
+# for logging
+LOCAL_LDLIBS    += -llog
 LOCAL_SHARED_LIBRARIES := sigar
 include $(BUILD_EXECUTABLE)
 
@@ -34,5 +39,7 @@ LOCAL_SRC_FILES := ../t_sigar_netconn.c
 LOCAL_CFLAGS := \
 	-D__android__=1 \
 	-I../include
+# for logging
+LOCAL_LDLIBS    += -llog
 LOCAL_SHARED_LIBRARIES := sigar
 include $(BUILD_EXECUTABLE)
