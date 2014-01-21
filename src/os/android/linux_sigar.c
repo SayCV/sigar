@@ -35,6 +35,7 @@
 
 #define pageshift(x) ((x) << sigar->pagesize)
 
+#define PROC_CPUINFO PROC_FS_ROOT "cpuinfo"
 #define PROC_MEMINFO PROC_FS_ROOT "meminfo"
 #define PROC_VMSTAT  PROC_FS_ROOT "vmstat"
 #define PROC_MTRR    PROC_FS_ROOT "mtrr"
