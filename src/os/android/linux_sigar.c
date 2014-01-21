@@ -163,9 +163,13 @@ int sigar_os_open(sigar_t **sigar)
     struct stat sb;
     struct utsname name;
 
-    *sigar = malloc(sizeof(**sigar));
+    *sigar = (sigar_t *)malloc(sizeof(**sigar));
+    if(NULL == *sigar) {
+    	/* Unable to allocate enough memory. */
+    	LOGE("Unable to allocate enough memory for sigar_t *sigar: %d.", sizeof(**sigar));
+    }
     
-    LOGE("malloc 0x%8x size : %d", *sigar, sizeof(**sigar));
+    LOGD("malloc 0x%8x size : %d", *sigar, sizeof(**sigar));
 
     (*sigar)->pagesize = 0;
     i = getpagesize();
@@ -179,7 +183,7 @@ int sigar_os_open(sigar_t **sigar)
     }
     
     (*sigar)->ticks = sysconf(_SC_CLK_TCK);
-    LOGE("sigar->ticks init to : %d", (*sigar)->ticks);
+    LOGD("sigar->ticks init to : %d", (*sigar)->ticks);
 
     (*sigar)->ram = -1;
 
@@ -412,6 +416,8 @@ static void get_cpu_metrics(sigar_t *sigar, sigar_cpu_t *cpu, char *line)
 		//cpu  3254275 349949 1281228 21517168 1249139 584 12714 0 0 0
     char *ptr = sigar_skip_token(line); /* "cpu%d" */
 		__FUNC_LOGn();
+		LOGD("checked malloc 0x%8x size : %d", sigar, sizeof(*sigar));
+    LOGD("checked sigar->ticks init to : %d", (sigar)->ticks);
     cpu->user += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();// 3254275
     cpu->nice += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();// 349949
     cpu->sys  += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();// 1281228

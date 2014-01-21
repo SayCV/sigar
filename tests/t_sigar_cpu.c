@@ -52,7 +52,6 @@
 #include "trace.h"
 
 #define assert(exp) __ASSERT(exp)
-#define assert(exp)
 
 TEST(test_sigar_cpu_get) {
 	sigar_cpu_t cpu;
