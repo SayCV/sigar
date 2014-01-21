@@ -43,3 +43,15 @@ LOCAL_CFLAGS := \
 LOCAL_LDLIBS    += -llog
 LOCAL_SHARED_LIBRARIES := sigar
 include $(BUILD_EXECUTABLE)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := sigar_uptime
+LOCAL_SRC_FILES := ../t_sigar_uptime.c
+LOCAL_CFLAGS := -Wall -g \
+	-D__android__=1 \
+	-I../include
+LOCAL_LDFLAGS := -Wl,-Map,sigar_uptime.map	
+# for logging
+LOCAL_LDLIBS    += -llog
+LOCAL_SHARED_LIBRARIES := sigar
+include $(BUILD_EXECUTABLE)
