@@ -164,6 +164,8 @@ int sigar_os_open(sigar_t **sigar)
     struct utsname name;
 
     *sigar = malloc(sizeof(**sigar));
+    
+    LOGE("malloc 0x%8x size : %d", *sigar, sizeof(**sigar));
 
     (*sigar)->pagesize = 0;
     i = getpagesize();
@@ -177,6 +179,7 @@ int sigar_os_open(sigar_t **sigar)
     }
     
     (*sigar)->ticks = sysconf(_SC_CLK_TCK);
+    LOGE("sigar->ticks init to : %d", (*sigar)->ticks);
 
     (*sigar)->ram = -1;
 
@@ -406,25 +409,33 @@ int sigar_swap_get(sigar_t *sigar, sigar_swap_t *swap)
 
 static void get_cpu_metrics(sigar_t *sigar, sigar_cpu_t *cpu, char *line)
 {
+		//cpu  3254275 349949 1281228 21517168 1249139 584 12714 0 0 0
     char *ptr = sigar_skip_token(line); /* "cpu%d" */
 		__FUNC_LOGn();
-    cpu->user += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();
-    cpu->nice += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();
-    cpu->sys  += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();
-    cpu->idle += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();
+    cpu->user += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();// 3254275
+    cpu->nice += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();// 349949
+    cpu->sys  += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();// 1281228
+    cpu->idle += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();// 21517168
     if (*ptr == ' ') {
         /* 2.6+ kernels only */
-        cpu->wait += SIGAR_TICK2MSEC(sigar_strtoull(ptr));
-        cpu->irq += SIGAR_TICK2MSEC(sigar_strtoull(ptr));
-        cpu->soft_irq += SIGAR_TICK2MSEC(sigar_strtoull(ptr));
+        cpu->wait += SIGAR_TICK2MSEC(sigar_strtoull(ptr));// 1249139
+        cpu->irq += SIGAR_TICK2MSEC(sigar_strtoull(ptr));// 584
+        cpu->soft_irq += SIGAR_TICK2MSEC(sigar_strtoull(ptr));// 12714
     }
     if (*ptr == ' ') {
         /* 2.6.11+ kernels only */
-        cpu->stolen += SIGAR_TICK2MSEC(sigar_strtoull(ptr));
+        cpu->stolen += SIGAR_TICK2MSEC(sigar_strtoull(ptr));// 0
     }
     cpu->total =
         cpu->user + cpu->nice + cpu->sys + cpu->idle +
         cpu->wait + cpu->irq + cpu->soft_irq + cpu->stolen;
+		LOGD( "cpu->total(0x%x) = " \
+					"cpu->user(0x%x) + cpu->nice(0x%x) + cpu->sys(0x%x) + cpu->idle(0x%x) + " \
+					"cpu->wait(0x%x) + cpu->irq(0x%x) + cpu->soft_irq(0x%x) + cpu->stolen(0x%x)",
+        cpu->total,
+        cpu->user, cpu->nice, cpu->sys, cpu->idle, 
+        cpu->wait, cpu->irq, cpu->soft_irq, cpu->stolen
+    );
 }
 
 int sigar_cpu_get(sigar_t *sigar, sigar_cpu_t *cpu)
