@@ -406,7 +406,7 @@ int sigar_swap_get(sigar_t *sigar, sigar_swap_t *swap)
 static void get_cpu_metrics(sigar_t *sigar, sigar_cpu_t *cpu, char *line)
 {
     char *ptr = sigar_skip_token(line); /* "cpu%d" */
-		__FUNC_LOGn();
+	
     cpu->user += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();
     cpu->nice += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();
     cpu->sys  += SIGAR_TICK2MSEC(sigar_strtoull(ptr));__FUNC_LOGn();
