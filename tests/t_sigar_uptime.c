@@ -45,6 +45,11 @@
 #include "sigar_format.h"
 #include "sigar_tests.h"
 
+//#define UNDEBUG_FILE
+#include "trace.h"
+
+#define assert(exp) __ASSERT(exp)
+
 TEST(test_sigar_uptime_get) {
 	sigar_uptime_t uptime;
 
